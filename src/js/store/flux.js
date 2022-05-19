@@ -1,43 +1,55 @@
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
-			demo: [
-				{
-					title: "FIRST",
-					background: "white",
-					initial: "white"
-				},
-				{
-					title: "SECOND",
-					background: "white",
-					initial: "white"
-				}
-			]
+			apiURL: "https://www.swapi.tech/api/",
+			people:[],
+			vehicles:[],
+			planets:[],
+			favorites:[]
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
-			exampleFunction: () => {
-				getActions().changeColor(0, "green");
+			fetchPeople: () => {
+				const store = getStore();
+				fetch(`${store.apiURL}/people/1`)
+				.then(response => response.json())
+				.then(data => {
+					setStore({ people: data.results});
+				})
+				.then(() => console.log(store.people))
+				.catch(function(error){
+					console.log('Looks like there was a problem: \n', error);
+				});
 			},
-			loadSomeData: () => {
+			fetchPlanets: () => {
+				fetch(`${store.apiURL}/planets/3`)
+				.then(response => response.json())
+				.then(data => {
+					setStore({planets: data.results});
+				})
+				.then(() => console.log(store.planets))
+				.catch(function(error){
+					console.log('Looks like there was a problem: \n', error);
+				});
 				/**
 					fetch().then().then(data => setStore({ "foo": data.bar }))
 				*/
 			},
-			changeColor: (index, color) => {
-				//get the store
-				const store = getStore();
-
-				//we have to loop the entire demo array to look for the respective index
-				//and change its color
-				const demo = store.demo.map((elm, i) => {
-					if (i === index) elm.background = color;
-					return elm;
+			fetchVehicles: () => {
+				fetch(`${store.apiURL}/vehicles`)
+				.then(response => response.json())
+				.then(data => {
+					setStore({vehicles: data.results});
+				})
+				.then(() => console.log(store.vehicles))
+				.catch(function(error){
+					console.log('Looks like there was a problem: \n', error);
 				});
-
-				//reset the global store
-				setStore({ demo: demo });
-			}
+				/**
+					fetch().then().then(data => setStore({ "foo": data.bar }))
+				*/
+			},
+			
 		}
 	};
 };
