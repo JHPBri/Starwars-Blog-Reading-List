@@ -11,14 +11,14 @@ const getState = ({ getStore, getActions, setStore }) => {
 			// Use getActions to call a function within a fuction
 			fetchPeople: () => {
 				const store = getStore();
-				fetch(`${store.apiURL}/people/1`)
+				fetch(`${store.apiURL}/people`)
 				.then(response => response.json())
 				.then(data => {
 					setStore({ people: data.results});
 				})
-				.then(() => console.log(store.people))
+				.then(() => console.log(getStore().people))
 				.catch(function(error){
-					console.log('Looks like there was a problem: \n', error);
+					console.log('error', error);
 				});
 			},
 			fetchPlanets: () => {
@@ -27,9 +27,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 				.then(data => {
 					setStore({planets: data.results});
 				})
-				.then(() => console.log(store.planets))
+				.then(() => console.log(getStore.planets))
 				.catch(function(error){
-					console.log('Looks like there was a problem: \n', error);
+					console.log('error', error);
 				});
 				/**
 					fetch().then().then(data => setStore({ "foo": data.bar }))
@@ -41,9 +41,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 				.then(data => {
 					setStore({vehicles: data.results});
 				})
-				.then(() => console.log(store.vehicles))
+				.then(() => console.log(getStore.vehicles))
 				.catch(function(error){
-					console.log('Looks like there was a problem: \n', error);
+					console.log('error', error);
 				});
 				/**
 					fetch().then().then(data => setStore({ "foo": data.bar }))

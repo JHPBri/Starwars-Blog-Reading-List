@@ -1,11 +1,20 @@
 import React from "react";
 import "../../styles/home.css";
-import PeopleCard from "../component/PeopleCard";
-import PlanetCard from "../component/PlanetsCard";
+import Card from "../component/Card";
+import { Context } from '../store/appContext' //API access
+
+
 
 export const Home = () => (
+	//const{store, actions } = useContext(Context)
+
+
 	<div className="mt-5">
-		<PeopleCard />
-		<PlanetCard />
+		<Card />
 	</div>
+	
+	
+
+	
+	
 );
