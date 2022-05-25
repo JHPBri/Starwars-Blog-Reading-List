@@ -1,7 +1,7 @@
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
-			apiURL: "https://www.swapi.tech/api/",
+			apiURL: "https://swapi.dev/api/",
 			people:[],
 			vehicles:[],
 			planets:[],
@@ -16,13 +16,14 @@ const getState = ({ getStore, getActions, setStore }) => {
 				.then(data => {
 					setStore({ people: data.results});
 				})
-				.then(() => console.log(getStore().people))
+				.then(() => console.log(store.people))
 				.catch(function(error){
 					console.log('error', error);
 				});
 			},
 			fetchPlanets: () => {
-				fetch(`${store.apiURL}/planets/3`)
+				const store = getStore();
+				fetch(`${store.apiURL}/planets/`)
 				.then(response => response.json())
 				.then(data => {
 					setStore({planets: data.results});
@@ -36,6 +37,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				*/
 			},
 			fetchVehicles: () => {
+				const store = getStore();
 				fetch(`${store.apiURL}/vehicles`)
 				.then(response => response.json())
 				.then(data => {
@@ -49,6 +51,17 @@ const getState = ({ getStore, getActions, setStore }) => {
 					fetch().then().then(data => setStore({ "foo": data.bar }))
 				*/
 			},
+			addToFavorite: itemName => {
+				const oldFavorites = getStore().favorites;
+				const foundFavorite = oldFavorites.find(item => item === itemName);
+				if (foundFavorite) {
+					const newArray = oldFavorites.filter(item => item !== foundFavorite); //remove item
+					setStore({ favorites: newArray });
+				} else {
+					setStore({ favorites: [...oldFavorites, itemName] });
+				}
+			},
+
 			
 		}
 	};
